@@ -1,7 +1,7 @@
 #
 # Copyright (C) 2019 The TwrpBuilder Open-Source Project
 #
-# Copyright (C) 2020-2021 OrangeFox Recovery Project
+# Copyright (C) 2020-2026 The OrangeFox Recovery Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,20 +17,20 @@
 #
 
 # Release name
-PRODUCT_RELEASE_NAME := reatoll
+PRODUCT_RELEASE_NAME := sm7125
 
-$(call inherit-product, device/realme/reatoll/device.mk)
+$(call inherit-product, $(LOCAL_DIR)/device.mk)
 
-# Inherit some common TWRP stuff.
+# Inherit some common OFRP stuff.
 $(call inherit-product, vendor/twrp/config/common.mk)
 
 # Inherit from common AOSP config
 $(call inherit-product, $(SRC_TARGET_DIR)/product/base.mk)
 
 # Device identifier. This must come after all inclusions
-PRODUCT_DEVICE := reatoll
-PRODUCT_NAME := twrp_reatoll
+PRODUCT_DEVICE := sm7125
+PRODUCT_NAME := twrp_sm7125
 PRODUCT_BRAND := realme
-PRODUCT_MODEL := realme atoll
+PRODUCT_MODEL := realme 7 Pro / 6 Pro
 PRODUCT_MANUFACTURER := realme
 #

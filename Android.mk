@@ -16,6 +16,6 @@
 
 LOCAL_PATH := $(call my-dir)
 
-ifeq ($(TARGET_DEVICE),reatoll)
+ifneq (,$(filter $(TARGET_DEVICE),sm7125))
 include $(call all-subdir-makefiles,$(LOCAL_PATH))
 endif

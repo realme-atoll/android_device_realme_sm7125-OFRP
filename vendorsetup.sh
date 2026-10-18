@@ -1,6 +1,6 @@
 #
 #	This file is part of the OrangeFox Recovery Project
-# 	Copyright (C) 2020-2021 The OrangeFox Recovery Project
+# 	Copyright (C) 2020-2026 The OrangeFox Recovery Project
 #
 #	OrangeFox is free software: you can redistribute it and/or modify
 #	it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
 #
 # 	Please maintain this if you use this script or any part of it
 #
-FDEVICE="reatoll"
+FDEVICE="sm7125"
 #set -o xtrace
 
 fox_get_target_device() {
@@ -35,14 +35,14 @@ if [ -z "$1" -a -z "$FOX_BUILD_DEVICE" ]; then
 fi
 
 if [ "$1" = "$FDEVICE" -o "$FOX_BUILD_DEVICE" = "$FDEVICE" ]; then
-	export DEVICE_PATH=device/realme/reatoll
+	export DEVICE_PATH="device/realme/sm7125"
 	export LC_ALL="C.UTF-8"
  	export ALLOW_MISSING_DEPENDENCIES=true
  	
- 	#OFR build settings & info
+ 	#OFRP build settings & info
 	export FOX_USE_TWRP_RECOVERY_IMAGE_BUILDER=1
 	export OF_NO_TREBLE_COMPATIBILITY_CHECK=1
-	export TARGET_DEVICE_ALT="RMX2061,RMX2170,RMX3081"
+	export TARGET_DEVICE_ALT="RMX2170,RMX2061,RMX3081"
 	export OF_SUPPORT_OZIP_DECRYPTION=1
 	export TW_OZIP_DECRYPT_KEY="0000"
 	export FOX_RECOVERY_SYSTEM_PARTITION="/dev/block/mapper/system"
@@ -52,7 +52,7 @@ if [ "$1" = "$FDEVICE" -o "$FOX_BUILD_DEVICE" = "$FDEVICE" ]; then
 	export OF_UNBIND_SDCARD_F2FS=1
 	export OF_IGNORE_LOGICAL_MOUNT_ERRORS=1
 
-	#OFR binary files
+	#OFRP binary files
 	export FOX_REPLACE_BUSYBOX_PS=1
 	export FOX_USE_BASH_SHELL=1
 	export FOX_ASH_IS_BASH=1
@@ -63,7 +63,7 @@ if [ "$1" = "$FDEVICE" -o "$FOX_BUILD_DEVICE" = "$FDEVICE" ]; then
 	export OF_ENABLE_LPTOOLS=1
 	export FOX_USE_NANO_EDITOR=1
 	
-	#OFR patches
+	#OFRP patches
 	export OF_PATCH_AVB20=1
 	export OF_KEEP_DM_VERITY_FORCED_ENCRYPTION=1
 	export OF_NO_ADDITIONAL_MIUI_PROPS_CHECK=1
@@ -74,7 +74,7 @@ if [ "$1" = "$FDEVICE" -o "$FOX_BUILD_DEVICE" = "$FDEVICE" ]; then
 	export OF_SUPPORT_ALL_BLOCK_OTA_UPDATES=1
 	export OF_DISABLE_INCREMENTAL_OTA_BY_DEFAULT=1
 
-	#OFR settings
+	#OFRP settings
 	export OF_SKIP_MULTIUSER_FOLDERS_BACKUP=1
 	export OF_QUICK_BACKUP_LIST="/data;/boot;"
 	export OF_ALLOW_DISABLE_NAVBAR=0
@@ -85,6 +85,18 @@ if [ "$1" = "$FDEVICE" -o "$FOX_BUILD_DEVICE" = "$FDEVICE" ]; then
 	export OF_HIDE_NOTCH=1
 	export FOX_ENABLE_APP_MANAGER=1
 	export FOX_CUSTOM_FOLDER_FOR_SETTINGS="/custom"
+
+	# Android 16 specific settings
+	export OF_ENABLE_FILE_LEVEL_ENCRYPTION=1
+	export FOX_DELETE_PRELOGD=1
+	export FOX_EXCLUDE_DEFAULTS=1
+	export FOX_USE_MKNTFS=1
+	export OF_ENABLE_LZ4_USING_CMD=1
+	export OF_ENABLE_ZSTD_USING_CMD=1
+	export FOX_RESET_SETTINGS_FOLDER=/custom
+
+	# OrangeFox R12.0 features
+	export FOX_ADVANCED_SECURITY=1
 
 	lunch twrp_$FDEVICE-eng
 	# let's see what are our build VARs
