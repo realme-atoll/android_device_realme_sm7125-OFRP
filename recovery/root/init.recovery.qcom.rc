@@ -1,7 +1,7 @@
 #
 # Copyright (c) 2009-2012, 2014-2015, The Linux Foundation. All rights reserved.
 #
-# Copyright (C) 2020-2021 The OrangeFox Recovery Project
+# Copyright (C) 2020-2026 The OrangeFox Recovery Project
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -34,11 +34,14 @@ on init
     mkdir /tmp/install
     mkdir /tmp/install/bin
     chmod 0777 /system/bin/gui-props.sh
+    chmod 0777 /system/bin/runatboot.sh
     start gui-props
+    start runatboot
 
 on fs
     wait /dev/block/platform/soc/${ro.boot.bootdevice}
     symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
+    symlink /dev/block/platform/soc/${ro.boot.bootdevice}/by-name /dev/block/by-name
     write /sys/class/power_supply/usb/otg_switch 1
 
 on boot
@@ -47,7 +50,9 @@ on boot
 
 on property:twrp.decrypt.done=true
     chmod 0777 /system/bin/ofrpotafix.sh
+    chmod 0777 /system/bin/runatboot.sh
     start ofrpotafix
+    start runatboot
 
 service ofrpotafix /system/bin/ofrpotafix.sh
     user root
@@ -57,6 +62,13 @@ service ofrpotafix /system/bin/ofrpotafix.sh
     seclabel u:r:recovery:s0
  
 service gui-props /system/bin/gui-props.sh
+    user root
+    group root
+    disabled
+    oneshot
+    seclabel u:r:recovery:s0
+
+service runatboot /system/bin/runatboot.sh
     user root
     group root
     disabled

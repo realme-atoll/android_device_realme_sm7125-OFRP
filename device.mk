@@ -1,6 +1,6 @@
 #
 # This file is part of the OrangeFox Recovery Project
-# Copyright (C) 2020-2021 The OrangeFox Recovery Project
+# Copyright (C) 2020-2026 The OrangeFox Recovery Project
 #
 # OrangeFox is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -49,4 +49,13 @@ PRODUCT_PACKAGES += \
     qcom_decrypt_fbe
 
 TARGET_USE_CUSTOM_LUN_FILE_PATH := "/config/usb_gadget/g1/functions/mass_storage.0/lun.%d/file"
-#
+
+# Android 16 specific packages
+PRODUCT_PACKAGES += \
+    lz4 \
+    zstd
+
+# Enable file-based encryption
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.crypto.file_based=true \
+    ro.crypto.metadata_encryption=true

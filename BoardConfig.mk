@@ -1,7 +1,7 @@
 #
 # Copyright (C) 2019 The TwrpBuilder Open-Source Project
 #
-# Copyright (C) 2020-2021 OrangeFox Recovery Project
+# Copyright (C) 2020-2026 The OrangeFox Recovery Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -126,14 +126,18 @@ TARGET_COPY_OUT_VENDOR := vendor
 BOARD_HAS_LARGE_FILESYSTEM := true
 TARGET_RECOVERY_PIXEL_FORMAT := "BGRA_8888"
 
-# Crypto
-PLATFORM_VERSION := 99.87.36
+# Crypto - Android 16 FBE v2 support
+PLATFORM_VERSION := 16
 PLATFORM_VERSION_LAST_STABLE := $(PLATFORM_VERSION)
-PLATFORM_SECURITY_PATCH := 2127-12-31
+PLATFORM_SECURITY_PATCH := 2025-08-05
 BOOT_SECURITY_PATCH := $(PLATFORM_SECURITY_PATCH)
 VENDOR_SECURITY_PATCH := $(PLATFORM_SECURITY_PATCH)
 BOARD_USES_QCOM_FBE_DECRYPTION := true
+BOARD_USES_QCOM_FBE_DECRYPTION_V2 := true
 TW_INCLUDE_CRYPTO := true
+TW_INCLUDE_CRYPTO_FBE := true
+TW_INCLUDE_FBE_METADATA_ENCRYPTED := true
+TW_USE_FSCRYPT := 1
 
 # TWRP specific build flags
 TW_THEME := portrait_hdpi
@@ -145,6 +149,15 @@ TW_INPUT_BLACKLIST := "hbtp_vm"
 TW_NO_SCREEN_BLANK := true
 TW_BACKUP_EXCLUSIONS := /data/fonts/,/data/nandswap
 
+# Android 16 specific flags
+TW_SUPPORT_INPUT_AIDL_HIDX := true
+TW_SUPPORT_INPUT_AIDL := true
+TW_DEVICE_VERSION := sm7125_R12.0_A16
+TARGET_OTA_ASSERT_DEVICE := sm7125,RMX2170,RMX2061,RMX3081
+TW_HAS_MTP := true
+TW_MTP_DEVICE := /dev/usb-ffs/mtp
+TW_SCREEN_BLANK_ON_BOOT := true
+
 # Set brightness path and level
 TW_BRIGHTNESS_PATH := "/sys/class/backlight/panel0-backlight/brightness"
 TW_MAX_BRIGHTNESS := 2047
@@ -154,7 +167,7 @@ TW_DEFAULT_BRIGHTNESS := 1200
 TW_HAS_EDL_MODE := true
 
 # Include some binaries
-TW_INCLUDE_RESETPROP := true 
+TW_INCLUDE_RESETPROP := true
 TW_INCLUDE_REPACKTOOLS := true
 TW_INCLUDE_PYTHON := true
 
@@ -174,4 +187,10 @@ TW_CUSTOM_CPU_TEMP_PATH := "/sys/devices/virtual/thermal/thermal_zone4/temp"
 
 # Other flags
 TW_EXCLUDE_APEX := true
-#
+
+# Magisk v30.7, KernelSU v3.2.5, KernelSU Next v3.3.0, APatch support
+TW_INCLUDE_Magisk := true
+
+# AVB & filesystem flags
+BOARD_MOVE_GSI_AVB_KEYS_TO_VBMETA := true
+TARGET_USE_MKE2FS := true
