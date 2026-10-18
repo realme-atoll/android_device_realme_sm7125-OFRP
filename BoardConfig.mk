@@ -57,7 +57,9 @@ BOARD_KERNEL_CMDLINE := console=ttyMSM0,115200n8 \
 	androidboot.selinux=permissive \
 	earlycon=msm_geni_serial,0xa88000 \
 	androidboot.init_fatal_reboot_target=recovery \
-       cgroup.memory=nokmem,nosocket
+	cgroup.memory=nokmem,nosocket \
+	kpti=off \
+	irqaffinity=0-3
 BOARD_KERNEL_IMAGE_NAME := Image
 BOARD_KERNEL_PAGESIZE := 4096
 BOARD_BOOT_HEADER_VERSION := 2
@@ -95,13 +97,18 @@ BOARD_AVB_RECOVERY_ROLLBACK_INDEX_LOCATION := 1
 # Partitions
 BOARD_FLASH_BLOCK_SIZE := 262144
 BOARD_BOOTIMAGE_PARTITION_SIZE := 67108864
+BOARD_CACHEIMAGE_PARTITION_SIZE := 268435456
+BOARD_DTBOIMG_PARTITION_SIZE := 25165824
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 100663296
 
 # Dynamic Partitions
-BOARD_SUPER_PARTITION_SIZE := 8178892800
+BOARD_SUPER_PARTITION_SIZE := 8476688384
 BOARD_SUPER_PARTITION_GROUPS := qti_dynamic_partitions
-BOARD_QTI_DYNAMIC_PARTITIONS_SIZE := 8178892800
+BOARD_QTI_DYNAMIC_PARTITIONS_SIZE := 8472494080
 BOARD_QTI_DYNAMIC_PARTITIONS_PARTITION_LIST := system system_ext product vendor odm
+
+# Explicitly disable virtual A/B
+AB_OTA_UPDATER := false
 
 # System as root
 BOARD_ROOT_EXTRA_FOLDERS := bluetooth custom dsp firmware persist
