@@ -1,43 +1,51 @@
 #!/system/bin/sh
 
-# This script is needed to automatically set GUI props for unified devices.
-load_reatoll()
-{
-    setprop "fox.status.right.offset" "34";
-    setprop "fox.screen.height" "2400";
-}
+# This script is needed to automatically set GUI props for unified sm7125 devices (RMX2170 / RMX2061 / RMX3081)
 
 load_RMX2061()
 {
     setprop "fox.status.left.offset" "261";
-    setprop "fox.status.height.offset" "108";
-    setprop "fox.status.placement.offset" "38";
-    echo "I:GUI-props: using props for" $project >> $LOGF;
+    setprop "fox.status.height.offset" "132";
+    setprop "fox.status.placement.offset" "40";
+    setprop "fox.status.right.offset" "34";
+    setprop "fox.screen.height" "2400";
+    echo "I:GUI-props: using props for realme 6 Pro (RMX2061)" >> $LOGF;
 }
 
-load_RMX3081_2170()
+load_RMX2170()
 {
     setprop "fox.status.left.offset" "158";
     setprop "fox.status.height.offset" "140";
     setprop "fox.status.placement.offset" "40";
-    echo "I:GUI-props: using props for" $project >> $LOGF;
+    setprop "fox.status.right.offset" "34";
+    setprop "fox.screen.height" "2400";
+    echo "I:GUI-props: using props for realme 7 Pro (RMX2170)" >> $LOGF;
 }
 
-local LOGF=/tmp/recovery.log;
-project=$(cat /proc/oppoVersion/prjName);
+load_RMX3081()
+{
+    setprop "fox.status.left.offset" "158";
+    setprop "fox.status.height.offset" "140";
+    setprop "fox.status.placement.offset" "40";
+    setprop "fox.status.right.offset" "34";
+    setprop "fox.screen.height" "2400";
+    echo "I:GUI-props: using props for realme 8 Pro (RMX3081)" >> $LOGF;
+}
 
-case $project in
-    "206B1" | "20711")
-        load_RMX3081_2170
+LOGF=/tmp/recovery.log;
+project=$(cat /proc/oppoVersion/prjName 2>/dev/null);
+[ -z "$project" ] && project=$(cat /proc/oplusVersion/prjName 2>/dev/null);
+
+case "$project" in
+    "20711")
+        load_RMX3081
         ;;
-    "19721")
+    "206B1"|"206b1")
+        load_RMX2170
+        ;;
+    "19721"|*)
         load_RMX2061
         ;;
-     *)
-        echo "E:GUI-props: unsupported project:" $project >> $LOGF;
-        ;;
 esac
-
-load_reatoll
 
 exit 0

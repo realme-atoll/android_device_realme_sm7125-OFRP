@@ -3,3 +3,11 @@ ro.boot.dynamic_partitions=true
 ro.adb.secure=0
 ro.boot.avb_version=1.0
 ro.boot.vbmeta.avb_version=1.0
+
+# Boot verification state for Magisk
+ro.boot.verifiedbootstate=orange
+ro.boot.flash.locked=0
+ro.boot.vbmeta.device_state=unlocked
+
+# Fix Magisk loop device issues on Android 16
+loop.max_part_num=255
