@@ -3,7 +3,11 @@
 # specify MF_CHECK, and must come before any filesystems that do specify MF_CHECK
 
 # mount_point  fstype   device            device2                  flags
-/system_image   emmc    /dev/block/mapper/system
+/system_image   emmc    /dev/block/mapper/system                     flags=display="System Image";flashimg=1
+/system_ext_image emmc  /dev/block/mapper/system_ext                 flags=display="System_EXT Image";flashimg=1
+/product_image  emmc    /dev/block/mapper/product                    flags=display="Product Image";flashimg=1
+/vendor_image   emmc    /dev/block/mapper/vendor                     flags=display="Vendor Image";flashimg=1
+/odm_image      emmc    /dev/block/mapper/odm                        flags=display="ODM Image";flashimg=1
 
 /boot           emmc    /dev/block/bootdevice/by-name/boot
 /dtbo           emmc    /dev/block/bootdevice/by-name/dtbo           flags=display="Dtbo";flashimg;backup=1
@@ -52,5 +56,5 @@
 
 # Removable storage
 /usb_otg        auto    /dev/block/sdg1       /dev/block/sdg         flags=display="USB-Storage";storage;wipeingui;removable;fsflags="utf8"
-/sdcard1        auto    /dev/block/mmcblk0p1  /dev/block/mmcb0k1     flags=display="MicroSD";storage;wipeingui;removable;fsflags="nosuid,nodev,utf8"
+/sdcard1        auto    /dev/block/mmcblk0p1  /dev/block/mmcblk0     flags=display="MicroSD";storage;wipeingui;removable;fsflags="nosuid,nodev,utf8"
 #

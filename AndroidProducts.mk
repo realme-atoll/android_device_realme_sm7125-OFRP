@@ -18,4 +18,5 @@ PRODUCT_MAKEFILES := \
     $(LOCAL_DIR)/twrp_sm7125.mk
 
 COMMON_LUNCH_CHOICES := \
-    twrp_sm7125-eng
+    twrp_sm7125-eng \
+    twrp_sm7125-userdebug

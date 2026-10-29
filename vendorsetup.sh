@@ -42,7 +42,7 @@ if [ "$1" = "$FDEVICE" -o "$FOX_BUILD_DEVICE" = "$FDEVICE" ]; then
  	#OFRP build settings & info
 	export FOX_USE_TWRP_RECOVERY_IMAGE_BUILDER=1
 	export OF_NO_TREBLE_COMPATIBILITY_CHECK=1
-	export TARGET_DEVICE_ALT="RMX2170,RMX2061,RMX3081"
+	export TARGET_DEVICE_ALT="RMX2170,RMX2061,RMX3081,sm7125,atoll"
 	export OF_SUPPORT_OZIP_DECRYPTION=1
 	export TW_OZIP_DECRYPT_KEY="0000"
 	export FOX_RECOVERY_SYSTEM_PARTITION="/dev/block/mapper/system"
@@ -67,6 +67,9 @@ if [ "$1" = "$FDEVICE" -o "$FOX_BUILD_DEVICE" = "$FDEVICE" ]; then
 	export OF_PATCH_AVB20=1
 	export OF_KEEP_DM_VERITY_FORCED_ENCRYPTION=1
 	export OF_NO_ADDITIONAL_MIUI_PROPS_CHECK=1
+	export OF_USE_MAGISKBOOT=1
+	export OF_USE_MAGISKBOOT_FOR_ALL_PATCHES=1
+	export OF_DONT_PATCH_ENCRYPTED_DEVICE=1
 	
 	#OTA
 	export OF_FIX_OTA_UPDATE_MANUAL_FLASH_ERROR=1
@@ -98,7 +101,7 @@ if [ "$1" = "$FDEVICE" -o "$FOX_BUILD_DEVICE" = "$FDEVICE" ]; then
 	# OrangeFox R12.0 features
 	export FOX_ADVANCED_SECURITY=1
 
-	lunch twrp_$FDEVICE-eng
+	lunch twrp_${FDEVICE}-eng
 	# let's see what are our build VARs
 	if [ -n "$FOX_BUILD_LOG_FILE" -a -f "$FOX_BUILD_LOG_FILE" ]; then
   	   export | grep "FOX" >> $FOX_BUILD_LOG_FILE
