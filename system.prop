@@ -1,5 +1,26 @@
-vendor.gatekeeper.disable_spu=true
-ro.boot.dynamic_partitions=true
+# USB
+sys.usb.controller=a600000.dwc3
+sys.usb.rndis.func.name=rndis_bam
+sys.usb.rmnet.func.name=rmnet_bam
+persist.sys.isUsbOtgEnabled=true
 ro.adb.secure=0
+
+# Gatekeeper / Keymaster
+vendor.gatekeeper.disable_spu=true
+
+# Dynamic Partitions & AVB
+ro.boot.dynamic_partitions=true
 ro.boot.avb_version=1.0
 ro.boot.vbmeta.avb_version=1.0
+
+# Platform / Architecture
+ro.product.board=atoll
+ro.board.platform=atoll
+
+# Boot verification state for Magisk
+ro.boot.verifiedbootstate=orange
+ro.boot.flash.locked=0
+ro.boot.vbmeta.device_state=unlocked
+
+# Fix Magisk loop device issues on Android 16
+loop.max_part_num=255
