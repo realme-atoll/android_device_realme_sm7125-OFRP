@@ -18,6 +18,12 @@
 # Please maintain this if you use this script or any part of it
 #
 
+# Location-independent device path
+DEVICE_PATH ?= $(patsubst %/,%,$(dir $(lastword $(MAKEFILE_LIST))))
+ifeq ($(DEVICE_PATH),)
+  DEVICE_PATH := device/realme/sm7125
+endif
+
 # Dynamic partition stuff
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
 
@@ -31,21 +37,28 @@ PRODUCT_PACKAGES += \
 
 # realme otacert
 PRODUCT_EXTRA_RECOVERY_KEYS += \
-    $(LOCAL_PATH)/security/realme.special_OTA \
-    $(LOCAL_PATH)/security/realme.local_OTA
+    $(DEVICE_PATH)/security/realme.special_OTA \
+    $(DEVICE_PATH)/security/realme.local_OTA
 
 PRODUCT_SOONG_NAMESPACES += \
-    vendor/qcom/opensource/commonsys-intf/display \
-    vendor/qcom/opensource/display
+    vendor/qcom/opensource/commonsys-intf/display
 
-# Libraries
-TARGET_RECOVERY_DEVICE_MODULES += libdrm libion vendor.display.config@1.0 vendor.display.config@2.0 libdisplayconfig.qti
+# Recovery HALs and libraries
+TARGET_RECOVERY_DEVICE_MODULES += \
+    android.hidl.base@1.0 \
+    libcap \
+    libdrm \
+    libion \
+    libpcrecpp \
+    libxml2
+
 RECOVERY_LIBRARY_SOURCE_FILES += \
+    $(TARGET_OUT_SHARED_LIBRARIES)/android.hidl.base@1.0.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/libcap.so \
     $(TARGET_OUT_SHARED_LIBRARIES)/libdrm.so \
     $(TARGET_OUT_SHARED_LIBRARIES)/libion.so \
-    $(TARGET_OUT_SYSTEM_EXT_SHARED_LIBRARIES)/vendor.display.config@1.0.so \
-    $(TARGET_OUT_SYSTEM_EXT_SHARED_LIBRARIES)/vendor.display.config@2.0.so \
-    $(TARGET_OUT_VENDOR_SHARED_LIBRARIES)/libdisplayconfig.qti.so
+    $(TARGET_OUT_SHARED_LIBRARIES)/libpcrecpp.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/libxml2.so
 
 PRODUCT_PACKAGES += \
     qcom_decrypt \
@@ -53,9 +66,8 @@ PRODUCT_PACKAGES += \
 
 TARGET_USE_CUSTOM_LUN_FILE_PATH := "/config/usb_gadget/g1/functions/mass_storage.0/lun.%d/file"
 
-# Android 16 specific packages
+# Compression tools for modern payload / images
 PRODUCT_PACKAGES += \
-    lz4 \
     zstd
 
 # Enable file-based encryption

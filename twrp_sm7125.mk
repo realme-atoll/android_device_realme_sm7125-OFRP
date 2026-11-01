@@ -16,21 +16,26 @@
 # limitations under the License.
 #
 
-# Release name
-PRODUCT_RELEASE_NAME := sm7125
+# Determine directory containing this makefile
+DEVICE_DIR := $(patsubst %/,%,$(dir $(lastword $(MAKEFILE_LIST))))
+ifeq ($(DEVICE_DIR),)
+  DEVICE_DIR := device/realme/sm7125
+endif
 
-$(call inherit-product, $(LOCAL_DIR)/device.mk)
+# Inherit from those products by extension
+$(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/base.mk)
 
-# Inherit some common OFRP stuff.
+# Inherit some common OFRP stuff
 $(call inherit-product, vendor/twrp/config/common.mk)
 
-# Inherit from common AOSP config
-$(call inherit-product, $(SRC_TARGET_DIR)/product/base.mk)
+# Inherit from device makefile
+$(call inherit-product, $(DEVICE_DIR)/device.mk)
 
 # Device identifier. This must come after all inclusions
 PRODUCT_DEVICE := sm7125
 PRODUCT_NAME := twrp_sm7125
 PRODUCT_BRAND := realme
-PRODUCT_MODEL := realme 7 Pro / 6 Pro
+PRODUCT_MODEL := realme 7 Pro / 6 Pro / 8 Pro
 PRODUCT_MANUFACTURER := realme
-#
+PRODUCT_RELEASE_NAME := sm7125

@@ -16,6 +16,11 @@
 # limitations under the License.
 #
 
+DEVICE_PATH ?= $(patsubst %/,%,$(dir $(lastword $(MAKEFILE_LIST))))
+ifeq ($(DEVICE_PATH),)
+  DEVICE_PATH := device/realme/sm7125
+endif
+
 # Architecture
 TARGET_ARCH := arm64
 TARGET_ARCH_VARIANT := armv8-2a
@@ -143,15 +148,8 @@ TW_INCLUDE_CRYPTO_FBE := true
 TW_INCLUDE_FBE_METADATA_ENCRYPTED := true
 TW_USE_FSCRYPT := 1
 
-# Realme / Oppo OZIP Decryption & Stock OTA Support
-OF_SUPPORT_OZIP_DECRYPTION := 1
+# Realme / Oppo OZIP Decryption Key
 TW_OZIP_DECRYPT_KEY := 1c4c1ea3a12531ae491b21bb31613c11
-
-# Custom ROM OTA Updating Support
-OF_SUPPORT_ALL_BLOCK_OTA_UPDATES := 1
-OF_FIX_OTA_UPDATE_MANUAL_FLASH_ERROR := 1
-OF_PREVENT_RECOVERY_OVERWRITE := 1
-OF_CHECK_OTA_SURVIVAL := 1
 
 # TWRP specific build flags
 TW_THEME := portrait_hdpi
@@ -188,7 +186,6 @@ TW_INCLUDE_RESETPROP := true
 TW_INCLUDE_REPACKTOOLS := true
 TW_INCLUDE_LPTOOLS := true
 TW_INCLUDE_LPDUMP := true
-TW_INCLUDE_PYTHON := true
 
 # Debug-tools
 TWRP_INCLUDE_LOGCAT := true
@@ -206,9 +203,6 @@ TW_CUSTOM_CPU_TEMP_PATH := "/sys/devices/virtual/thermal/thermal_zone4/temp"
 
 # Other flags
 TW_EXCLUDE_APEX := true
-
-# Magisk v30.7, KernelSU v3.2.5, KernelSU Next v3.3.0, APatch support
-TW_INCLUDE_Magisk := true
 
 # AVB & filesystem flags
 BOARD_MOVE_GSI_AVB_KEYS_TO_VBMETA := true
