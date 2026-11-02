@@ -18,6 +18,7 @@ export ALLOW_MISSING_DEPENDENCIES=true
 export LC_ALL="C.UTF-8"
 
 # OrangeFox Build Settings
+export FOX_BUILD_DEVICE="sm7125"
 export FOX_USE_TWRP_RECOVERY_IMAGE_BUILDER=1
 export OF_NO_TREBLE_COMPATIBILITY_CHECK=1
 export TARGET_DEVICE_ALT="sm7125,RMX2170,RMX2061,RMX3081,atoll"
@@ -78,8 +79,3 @@ export OF_ENABLE_ZSTD_USING_CMD=1
 export FOX_CUSTOM_FOLDER_FOR_SETTINGS="/custom"
 export FOX_RESET_SETTINGS_FOLDER="/custom"
 
-# Register lunch targets
-for dev in sm7125 RMX2170 RMX2061 RMX3081; do
-    add_lunch_combo twrp_${dev}-eng
-    add_lunch_combo twrp_${dev}-userdebug
-done
