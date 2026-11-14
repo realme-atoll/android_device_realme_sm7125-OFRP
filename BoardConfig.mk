@@ -22,6 +22,10 @@ endif
 # Shared device settings are in BoardConfigCommon.mk; tree-specific settings follow.
 include $(DEVICE_PATH)/BoardConfigCommon.mk
 
+# The OrangeFox welcome log gets this label from OF_CURRENT_BRANCH. repo sync
+# checks manifest projects out at detached commits, so set the displayed branch.
+override OF_CURRENT_BRANCH := fox_16.0
+
 # Recovery-specific ramdisk folders
 BOARD_ROOT_EXTRA_FOLDERS += custom
 
